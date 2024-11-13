@@ -1,0 +1,19 @@
+.summary {
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 28px;
+  color: rgba(40, 40, 40, 1);
+  margin-top: 3rem;
+  margin-bottom: 2.5rem;
+}
+
+.content-container {
+  display: flex;
+  justify-content: center;
+}
+
+.content-items-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}

@@ -1,0 +1,7 @@
+.header {
+  height: 152px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 4px 8px 4px rgba(224, 228, 229, 0.35);
+}
