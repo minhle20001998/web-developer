@@ -12,10 +12,15 @@ export const AutocompletePopover = <T,>({ show, listItems, currentItemIndex, ren
   if (!show) {
     return <></>
   }
-
-  return <div className={styles['suggestion-list']}>
+  return <div data-testid="autocomplete-popover" className={styles['suggestion-list']} role="list">
     {listItems?.map((item, index) => {
-      return renderListItem?.(item, currentItemIndex === index)
+      return <div
+        key={index}
+        role="listitem"
+        className={currentItemIndex === index ? 'selected' : ''}
+      >
+        {renderListItem?.(item, currentItemIndex === index)}
+      </div>
     })}
   </div>
 }

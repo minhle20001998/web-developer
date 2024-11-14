@@ -17,11 +17,13 @@ export const Autocomplete = <T,>({
   listItems,
   renderListItem,
   onChange,
-  onListItemPress
+  onListItemPress,
+  ...inputProps
 }: AutocompleteProps<T>) => {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
   const [currentItemIndex, setCurrentItemIndex] = useState<number | undefined>(undefined)
+
 
   // Handle increasing current index
   const moveDown = () => {
@@ -61,6 +63,7 @@ export const Autocomplete = <T,>({
 
   // Handle input keyboard interaction
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+
     if (e.key === 'ArrowDown') {
       // Prevent default caret moving behavior
       e.preventDefault()
@@ -121,6 +124,7 @@ export const Autocomplete = <T,>({
       value={propValue ?? value}
       onChange={onInputChange}
       onKeyDown={handleKeyDown}
+      {...inputProps}
     >
     </input>
     <AutocompletePopover

@@ -31,8 +31,9 @@ export const ContentItem = ({ DocumentExcerpt, DocumentTitle, DocumentURI }: Pro
 
     return result;
   };
+  
 
-  return <div className={styles['content-item-wrapper']}>
+  return <div data-testid="content-item" className={styles['content-item-wrapper']}>
     <a className={styles['title-link']} href={DocumentURI}>{DocumentTitle?.Text ?? ''}</a>
     <p className={styles.excerpt}>{renderTextWithHighlights(DocumentExcerpt)}</p>
     <a className={styles.link} href={DocumentURI}>{DocumentURI ?? ""}</a>

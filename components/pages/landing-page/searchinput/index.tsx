@@ -5,15 +5,14 @@ import style from './search-input.module.css'
 import { SearchIcon } from "~/components/ui/icons/search.icon"
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react"
 import { useRouter } from "next/router"
-import { useFetchSuggestion } from "../../../../hooks/fetch/use-fetch-suggestion.hook"
 import { CrossIcon } from "~/components/ui/icons/cross.icon"
+import { useFetchSuggestion } from "~/hooks/fetch/use-fetch-suggestion.hook"
 
 export const SearchInput = () => {
   const router = useRouter()
   const [searchValue, setSearchValue] = useState('')
   const { data: suggestion } = useFetchSuggestion(searchValue.trim())
   const inputRef = useRef<HTMLInputElement | null>(null)
-
   // Update search value state based on query url
   useEffect(() => {
     const searchQuery = router.query?.search
@@ -42,6 +41,7 @@ export const SearchInput = () => {
 
   // Change Search Query URL when user click on suggesstion item
   const handleSuggestionClick = (suggestion: string) => {
+    console.log('click')
     handleChangeQueryURL(suggestion)
   }
 
@@ -77,6 +77,7 @@ export const SearchInput = () => {
     }
 
     return <p
+      data-testid={`list-item-${item}`}
       key={item}
       onClick={() => handleSuggestionClick(item)}
       className={`${style['suggestion-list-item']} ${isActive ? style.focused : ''}`}
@@ -89,6 +90,7 @@ export const SearchInput = () => {
   return <form onSubmit={handleSubmit}>
     <div className={style['search-input-container']}>
       <Autocomplete
+        data-testid="autocomplete-input"
         inputRef={inputRef}
         showSuggestion={searchValue.length >= 3}
         value={searchValue}
@@ -100,6 +102,7 @@ export const SearchInput = () => {
       <div className={style['buttons-container']}>
         {searchValue.length >= 1
           ? <button
+            data-testid="clear-button"
             type="button"
             onClick={handleClearButtonClick}
             className={style['clear-button']}
@@ -109,6 +112,7 @@ export const SearchInput = () => {
           : <></>
         }
         <Button
+          data-testid="search-button"
           type="submit"
           className={style['search-button']}
         >
