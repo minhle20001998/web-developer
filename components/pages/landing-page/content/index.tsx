@@ -4,14 +4,17 @@ import { ContentItem } from "../content-item";
 import { useSearchResult } from "~/contexts/search-result.context";
 export const Content = () => {
 
-  const { ResultItems, PageSize, Page, TotalNumberOfResults } = useSearchResult()
+  const searchResult = useSearchResult()
 
   return (
     <div className={styles['content-container']}>
       <Container style={{ paddingTop: 0 }}>
-        <p className={styles.summary}>Showing {Page}-{PageSize} of {TotalNumberOfResults} results</p>
+        {searchResult
+          ? <p className={styles.summary}>Showing {searchResult?.Page}-{searchResult?.PageSize} of {searchResult?.TotalNumberOfResults} results</p>
+          : <></>
+        }
         <div className={styles['content-items-container']}>
-          {ResultItems.map((item) => {
+          {searchResult?.ResultItems?.map((item) => {
             return <ContentItem key={item.DocumentId} {...item} />
           })}
         </div>

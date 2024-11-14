@@ -1,6 +1,9 @@
 import axios from "axios"
-import { mockSearchAPI } from "~/constants"
 
-export const httpClient = axios.create({
-  baseURL: mockSearchAPI
+export const resultsHttpClient = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_RESULTS_API
+})
+
+export const suggestionHttpClient = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_SUGGESTION_API
 })

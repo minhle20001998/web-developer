@@ -32,3 +32,8 @@ export interface Highlight2 {
   BeginOffset: number
   EndOffset: number
 }
+
+export type Suggestion = {
+  stemmedQueryTerm: string
+  suggestions: Array<string>
+}

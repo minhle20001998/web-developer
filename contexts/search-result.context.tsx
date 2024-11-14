@@ -1,21 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { createContext, PropsWithChildren, useContext, useMemo } from "react";
+import { createContext, PropsWithChildren, useContext } from "react";
+import { useFetchResult } from "~/hooks/fetch/use-fetch-results.hook";
 import { SearchResult } from "~/types";
 
-const SearchResultContext = createContext<SearchResult>({
-  Page: 0,
-  PageSize: 0,
-  ResultItems: [],
-  TotalNumberOfResults: 0
-})
+// Create a context to hold the search result data
+const SearchResultContext = createContext<SearchResult | undefined>(undefined)
 
-export const SearchResultProvider = ({searchResult, children}: PropsWithChildren<{searchResult: SearchResult}>) => {
+export const SearchResultProvider = ({ children }: PropsWithChildren) => {
+  // Fetch search result data using a custom hook
+  const { data: searchResult, isError } = useFetchResult()
 
-  const value = useMemo(() => {
-    return searchResult
-  }, [])
+  // If there is an error, display an error message and stop rendering children
+  if(isError) {
+    return <>Error</>
+  }
 
-  return <SearchResultContext.Provider value={value}>
+  return <SearchResultContext.Provider value={searchResult}>
     {children}
   </SearchResultContext.Provider>
 }

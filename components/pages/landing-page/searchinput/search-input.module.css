@@ -1,0 +1,40 @@
+.search-input-container {
+  display: flex;
+  position: relative;
+}
+
+.suggestion-list-item {
+  padding: 8px 24px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+  cursor: pointer;
+}
+
+.suggestion-list-item.focused {
+  background-color: #f3f3f3;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 24px;
+  position: relative;
+  height: 56px;
+  left: -12px;
+}
+
+.clear-button {
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: calc(100% + 24px)
+}
+
+.search-button {
+  width: 160px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
