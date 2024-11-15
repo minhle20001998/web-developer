@@ -22,6 +22,7 @@ export const Autocomplete = <T,>({
 }: AutocompleteProps<T>) => {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
+  const [closeTimout, setCloseTimeout] = useState<NodeJS.Timeout | undefined>(undefined)
   const [currentItemIndex, setCurrentItemIndex] = useState<number | undefined>(undefined)
 
 
@@ -96,15 +97,20 @@ export const Autocomplete = <T,>({
 
   // Open suggestion popover
   const openSuggestion = () => {
+    if(closeTimout) {
+      clearTimeout(closeTimout)
+      setCloseTimeout(undefined)
+    }
     setShow(true);
   }
 
   // Close popover after delay time & reset current index
   const closeSuggestion = () => {
     setCurrentItemIndex(undefined)
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setShow(false);
     }, 100)
+    setCloseTimeout(timeout)
   }
 
   const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
