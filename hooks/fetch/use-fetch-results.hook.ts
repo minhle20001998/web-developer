@@ -11,7 +11,7 @@ export const useFetchResult = () => {
   // useEffect hook to monitor changes to the search query and trigger data fetching
   useEffect(() => {
     // Check if the search query exists, is a string, and has a length of 3 or more characters
-    if (typeof query?.search === 'string') {
+    if (typeof query?.search === 'string' && query?.search !== '') {
       // Call fetchResult to retrieve data based on the search query
       fetchResult()
     } else {
