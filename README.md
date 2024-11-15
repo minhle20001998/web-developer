@@ -3,6 +3,9 @@
 ## Description
 This project, 'Searching Website', is a web application designed to provide search function to user and display the results with highlighted words
 
+## Assumption
+- Highlighted words in suggestions are based on `stemmedQueryTerm` field in the API rather than the user input
+
 ## Features
 - Fetch and display search results in format
 - Provide suggestions in search bar
