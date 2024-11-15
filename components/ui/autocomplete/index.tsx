@@ -113,6 +113,7 @@ export const Autocomplete = <T,>({
     setCloseTimeout(timeout)
   }
 
+  // Handle input change when user typing
   const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.currentTarget.value;
     // Set local state to new value

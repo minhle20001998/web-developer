@@ -58,6 +58,9 @@ export const SearchInput = () => {
     inputRef.current?.focus()
   }
 
+  /**
+   * Render list of item in autocomplete popover
+   */
   const renderListItem = useCallback((item: string, isActive: boolean) => {
     // Initialize an empty array to store the rendered parts of the item
     const results = []
