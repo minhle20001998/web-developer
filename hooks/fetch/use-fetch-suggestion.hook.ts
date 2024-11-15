@@ -29,9 +29,10 @@ export const useFetchSuggestion = (query: string) => {
         // If the request is successful, update the data state with the fetched results
         setData(data)
       })
-      .catch(() => {
+      .catch((e) => {
         // If there's an error, set the isError state to true
         setIsError(true)
+        console.error(e)
       })
   }
 
