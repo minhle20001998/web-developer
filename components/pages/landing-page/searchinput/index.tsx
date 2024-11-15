@@ -41,7 +41,6 @@ export const SearchInput = () => {
 
   // Change Search Query URL when user click on suggesstion item
   const handleSuggestionClick = (suggestion: string) => {
-    console.log('click')
     handleChangeQueryURL(suggestion)
   }
 
