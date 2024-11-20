@@ -1,4 +1,4 @@
-import { ChangeEvent, InputHTMLAttributes, KeyboardEvent, MutableRefObject, useState } from "react";
+import { ChangeEvent, InputHTMLAttributes, KeyboardEvent, MutableRefObject, useRef, useState } from "react";
 import { AutocompletePopover } from "./autocomplete-popover";
 import styles from './autocomplete.module.css'
 
@@ -22,7 +22,7 @@ export const Autocomplete = <T,>({
 }: AutocompleteProps<T>) => {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
-  const [closeTimout, setCloseTimeout] = useState<NodeJS.Timeout | undefined>(undefined)
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [currentItemIndex, setCurrentItemIndex] = useState<number | undefined>(undefined)
 
 
@@ -97,20 +97,20 @@ export const Autocomplete = <T,>({
 
   // Open suggestion popover
   const openSuggestion = () => {
-    if(closeTimout) {
-      clearTimeout(closeTimout)
-      setCloseTimeout(undefined)
-    }
     setShow(true);
   }
 
   // Close popover after delay time & reset current index
   const closeSuggestion = () => {
     setCurrentItemIndex(undefined)
+    /**
+     * Set timeout to make the setShow function run last
+     * and allow other functions to cancel the setShow
+     *  */
     const timeout = setTimeout(() => {
       setShow(false);
-    }, 100)
-    setCloseTimeout(timeout)
+    }, 10)
+    closeTimeoutRef.current = timeout
   }
 
   // Handle input change when user typing
@@ -120,6 +120,17 @@ export const Autocomplete = <T,>({
     setValue(value);
     // Trigger prop callback
     onChange?.(event)
+  };
+
+  // Cancel the closing suggestion popover
+  const cancelCloseSuggestion = () => {
+    /**
+     * Set timeout to make the clearTimeout run last but before closing suggestion
+     * and allow close timout to be initialize
+     */
+    setTimeout(() => {
+      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    }, 0)
   };
 
   return <div className={styles.autocomplete}>
@@ -139,6 +150,8 @@ export const Autocomplete = <T,>({
       listItems={listItems}
       renderListItem={renderListItem}
       currentItemIndex={currentItemIndex}
+      onMouseDown={cancelCloseSuggestion}
+      onMouseUp={closeSuggestion}
     />
   </div>
 }
